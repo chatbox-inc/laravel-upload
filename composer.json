@@ -1,0 +1,37 @@
+{
+    "name": "chatbox-inc/laravel-upload",
+    "authors": [
+        {
+            "name": "mikakane",
+            "email": "t.goto@chatbox-inc.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Chatbox\\LaravelUpload\\": "./src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "chatbox-inc/laravel-firebase": "^1.0",
+        "barryvdh/laravel-cors": "^0.11.3",
+        "chatbox-inc/laravel-transaction": "^1.0",
+        "ext-fileinfo": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0",
+        "laravel/laravel": "^5.8"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "\\Chatbox\\LaravelUpload\\LaravelUploadServiceProvider"
+            ]
+        }
+    }
+
+}
