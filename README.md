@@ -8,9 +8,8 @@
 ## Functions
 
 - [ ] Supply Upload API 
-- [ ] Upload Validator
-- [ ] 
-
+- [ ] Upload File Validator
+- [ ] Upload File Remove
 
 ## Configuration
 
