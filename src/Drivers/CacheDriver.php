@@ -1,8 +1,10 @@
 <?php
 namespace Chatbox\LaravelUpload\Drivers;
+use Carbon\Carbon;
 use Chatbox\LaravelUpload\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Validator;
 
@@ -62,7 +64,7 @@ class CacheDriver implements DriverContract
 
         $file = new UploadedFile();
         $file->filename = Str::random();
-        $file->dir = $this->dir;
+        $file->dir = $this->dir.Carbon::now()->format("/Y/m/d/");
         $file->mime = $mimeType;
         $file->size = strlen($data);
         return $file;
@@ -78,11 +80,21 @@ class CacheDriver implements DriverContract
         Cache::put($this->cacheKey.$file->filename,$file,$this->cacheLifespan);
     }
 
-    public function setUrl(UploadedFile $file, $url)
+    public function upload(UploadedFile $file,string $filedata)
     {
+        $path = $this->getPath($file);
+        Storage::put($path, base64_decode($filedata));
+        $url = Storage::url($path);
         $file->url = $url;
         Cache::put($this->cacheKey.$file->filename,$file,$this->cacheLifespan);
     }
+
+    protected function getPath(UploadedFile $file){
+        $path = $file->dir. "/" . $file->filename;
+        return $path;
+    }
+
+
 
 
 }

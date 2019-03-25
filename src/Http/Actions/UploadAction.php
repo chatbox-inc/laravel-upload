@@ -30,17 +30,11 @@ class UploadAction
         }
         $base64String = $upload->loadBase64String();
         $file = $upload->createFileObject($base64String);
-
         $upload->storeFile($file);
-
         dispatch(new UploadJob($file,$base64String,$upload));
 
         return [
-            "file" => $file,
-            "upload" => [
-                "status" => "processing",
-                "message" => "upload task processing",
-            ]
+            "file" => $file
         ];
     }
 

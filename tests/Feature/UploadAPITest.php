@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -22,30 +23,19 @@ class UploadAPITest extends TestCase
         $response->assertStatus(200);
 
         $body = $response->json();
-        assert(data_get($body,"file",false));
-        assert(data_get($body,"file.dir") === "default");
-        assert(data_get($body,"file.size") === 205356);
-        assert(data_get($body,"file.mime") === "image/jpeg");
-        assert(data_get($body,"file.url",false) === null);
-        assert(data_get($body,"upload",false));
-        assert(data_get($body,"upload.status") === "processing");
-        assert(data_get($body,"upload.message") === "upload task processing");
+        $this->assertIsArray($response->json("file"));
+        $this->assertEquals($response->json("file.dir"), "default".Carbon::now()->format("/Y/m/d/"));
+        $this->assertEquals($response->json("file.size"), 205356);
+        $this->assertEquals($response->json("file.mime"), "image/jpeg");
+        $this->assertEquals($response->json("file.url"), null);
 
 
         $response = $this->get($this->prefix."/".data_get($body,"file.filename"));
-        if($e = $response->baseResponse->exception){
-            throw $e;
-        }
-
         $response->assertStatus(200);
-        $body = $response->json();
-        assert(data_get($body,"file",false));
-        assert(data_get($body,"file.dir") === "default");
-        assert(data_get($body,"file.size") === 205356);
-        assert(data_get($body,"file.mime") === "image/jpeg");
-        assert(data_get($body,"file.url",false) !== null);
-        assert(data_get($body,"upload",false));
-        assert(data_get($body,"upload.status") === "processing");
-        assert(data_get($body,"upload.message") === "upload task processing");
+        $this->assertIsArray($response->json("file"));
+        $this->assertEquals($response->json("file.dir"), "default".Carbon::now()->format("/Y/m/d/"));
+        $this->assertEquals($response->json("file.size"), 205356);
+        $this->assertEquals($response->json("file.mime"), "image/jpeg");
+        $this->assertTrue(!!$response->json("file.url"));
     }
 }

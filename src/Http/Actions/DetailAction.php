@@ -29,11 +29,7 @@ class DetailAction
             abort(404);
         }
         return [
-            "file" => $file,
-            "upload" => [
-                "status" => "processing",
-                "message" => "upload task processing",
-            ]
+            "file" => $file
         ];
     }
 

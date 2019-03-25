@@ -37,7 +37,7 @@ return [
 
 ### Drivers
 
-デフォルトの キャッシュドライバは、 Storage と Cache を使って実装がされています。
+デフォルトの キャッシュドライバは、 Storage と Cache と Queue を使って実装がされています。
 
 
 

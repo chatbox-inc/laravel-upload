@@ -13,7 +13,6 @@ use Illuminate\Validation\Validator;
 
 interface DriverContract
 {
-
     /**
      * @return Validator
      */
@@ -48,6 +47,6 @@ interface DriverContract
      * @param $url
      * @return mixed
      */
-    public function setUrl(UploadedFile $file,$url);
+    public function upload(UploadedFile $file, string $filedata);
 
 }

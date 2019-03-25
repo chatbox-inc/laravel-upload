@@ -42,20 +42,6 @@ class UploadJob implements ShouldQueue
 
     public function handle()
     {
-        $path = $this->getPath();
-        Storage::put($path, $this->getFiledata());
-        $url = Storage::url($path);
-        $this->upload->setUrl($this->uploadedFile,$url);
+        $this->upload->upload($this->uploadedFile,$this->fileData);
     }
-
-    protected function getPath(){
-        $path = $this->uploadedFile->dir. "/" . $this->uploadedFile->filename;
-        return $path;
-    }
-
-    protected function getFiledata(){
-        return base64_decode($this->fileData);
-    }
-
-
 }
